@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Activity Monitor</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text: #f8fafc;
+      --accent: #38bdf8;
+      --border: #334155;
+    }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 2rem;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    }
+    h1 { margin-top: 0; color: var(--accent); }
+    ul { list-style: none; padding: 0; }
+    li {
+      padding: 0.75rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+    }
+    .badge {
+      background: #0284c7;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Live Log Monitor</h1>
+      <ul id="logList"></ul>
+    </div>
+  </div>
+
+  <script>
+    const sampleLogs = [
+      { ip: '192.168.1.15', status: 200, endpoint: '/login' },
+      { ip: '10.0.0.4', status: 500, endpoint: '/checkout' },
+      { ip: '172.16.0.1', status: 404, endpoint: '/unknown' }
+    ];
+
+    const listContainer = document.getElementById('logList');
+
+    function renderLogs(data) {
+      listContainer.innerHTML = data.map(log => `
+        <li>
+          <span><strong>${log.ip}</strong> &mdash; ${log.endpoint}</span>
+          <span class="badge">HTTP ${log.status}</span>
+        </li>
+      `).join('');
+    }
+
+    renderLogs(sampleLogs);
+  </script>
+</body>
+</html>
+
